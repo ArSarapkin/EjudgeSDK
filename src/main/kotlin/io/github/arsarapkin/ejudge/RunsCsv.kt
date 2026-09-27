@@ -29,6 +29,6 @@ private fun buildRun(row: Map<String, String>, baseUrl: String, contestId: Long)
         problem = row["Problem"]?.trim() ?: "",
         language = row["Language"]?.trim() ?: "",
         status = row["Stat_Short"]?.trim() ?: "",
-        code = "",
+        code = null,
     )
 }

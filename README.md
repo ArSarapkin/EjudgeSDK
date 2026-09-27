@@ -72,13 +72,13 @@ EjudgeClient(baseUrl: String, username: String, password: String)
 
 | Метод | Что делает |
 |---|---|
-| `getRuns(firstRunId: Int = 0): List<EjudgeRun>` | Возвращает посылки с `runId >= firstRunId` вместе с исходным кодом |
+| `getRuns(loadCodes: Boolean = true, firstRunId: Int = 0): List<EjudgeRun>` | Возвращает посылки с `runId >= firstRunId`. При `loadCodes = false` исходный код не скачивается |
 | `accept(run: EjudgeRun): EjudgeRun` | Ставит посылке статус `OK` |
 | `summon(run: EjudgeRun, message: String): EjudgeRun` | Оставляет комментарий к посылке и вызывает её на защиту (статус `SM`) |
 
 `accept` и `summon` возвращают копию посылки с новым статусом, исходный объект не меняется.
 
-`getRuns` сначала скачивает список посылок, а потом исходный код каждой из них, до 50 запросов параллельно. На больших контестах это долго, поэтому, если посылки уже сохранены у вас, передавайте `firstRunId`, чтобы скачать только новые.
+`getRuns` сначала скачивает список посылок, а потом исходный код каждой из них, до 50 запросов параллельно. На больших контестах это долго, поэтому, если посылки уже сохранены у вас, передавайте `firstRunId`, чтобы скачать только новые. Если код не нужен, передайте `loadCodes = false`: тогда выполняется один запрос, а `code` у всех посылок равен `null`.
 
 ### `EjudgeRun`
 
@@ -93,7 +93,7 @@ data class EjudgeRun(
     val problem: String,    // короткое имя задачи
     val language: String,
     val status: String,     // короткий статус: OK, WA, SM, ...
-    val code: String,       // исходный код
+    val code: String?,      // исходный код; null, если getRuns(loadCodes = false)
 )
 ```
 

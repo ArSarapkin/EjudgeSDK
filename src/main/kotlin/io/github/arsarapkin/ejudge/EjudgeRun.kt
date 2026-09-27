@@ -13,5 +13,6 @@ data class EjudgeRun(
     val problem: String,
     val language: String,
     val status: String,
-    val code: String,
+    /** Исходный код; `null`, если посылки загружены без кода. */
+    val code: String?,
 )

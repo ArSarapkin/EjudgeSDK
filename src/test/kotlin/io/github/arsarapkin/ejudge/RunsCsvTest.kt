@@ -25,7 +25,7 @@ class RunsCsvTest {
                     problem = "A",
                     language = "g++",
                     status = "OK",
-                    code = "",
+                    code = null,
                 ),
             ),
             runs,

@@ -32,9 +32,13 @@ class EjudgeConnection internal constructor(
             .build()
     }
 
-    /** Возвращает посылки контеста с `runId >= firstRunId` вместе с исходным кодом. */
-    fun getRuns(firstRunId: Int = 0): List<EjudgeRun> {
+    /**
+     * Возвращает посылки контеста с `runId >= firstRunId`.
+     * Если [loadCodes] равен `false`, исходный код не скачивается и `code` у всех посылок равен `null`.
+     */
+    fun getRuns(loadCodes: Boolean = true, firstRunId: Int = 0): List<EjudgeRun> {
         val rows = fetchRunRows().filter { it.runId >= firstRunId }
+        if (!loadCodes) return rows
         val codeByRunId = fetchCodesAsync(rows.map { it.runId })
         return rows.map { it.copy(code = codeByRunId[it.runId] ?: "") }
     }
