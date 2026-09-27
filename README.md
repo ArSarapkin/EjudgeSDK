@@ -19,7 +19,7 @@ gpr.key=<токен>
 repositories {
     mavenCentral()
     maven {
-        url = uri("https://maven.pkg.github.com/arsarapkin/EjudgeLib")
+        url = uri("https://maven.pkg.github.com/arsarapkin/EjudgeSDK")
         credentials {
             username = providers.gradleProperty("gpr.user").get()
             password = providers.gradleProperty("gpr.key").get()
