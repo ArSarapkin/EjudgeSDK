@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.arsarapkin:ejudge-sdk:0.3.0")
+    implementation("io.github.arsarapkin:ejudge-sdk:0.4.0")
 }
 ```
 
@@ -93,9 +93,12 @@ data class EjudgeRun(
     val problem: String,    // короткое имя задачи
     val language: String,
     val status: EjudgeRunStatus,
+    val score: Int?,        // балл; null в контестах без баллов
     val code: String?,      // исходный код; null, если getRuns(loadCodes = false)
 )
 ```
+
+`score` заполняется из столбца `Score`. В контестах без баллов ejudge пишет туда `-1`, и SDK превращает его в `null`, так что `getRuns` работает одинаково для обоих типов контестов.
 
 `problemPos(): Int?` возвращает позицию задачи по букве в `problem`, начиная с 0: `A` → 0, `B` → 1 и т.д. Регистр не важен. Если `problem` — не одна латинская буква, возвращается `null`.
 

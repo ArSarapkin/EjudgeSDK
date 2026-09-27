@@ -2,6 +2,9 @@ package io.github.arsarapkin.ejudge
 
 import java.time.LocalDateTime
 
+/** В контестах без баллов ejudge пишет в столбец Score это значение. */
+private const val NO_SCORE = -1
+
 internal fun parseRunsCsv(csvText: String, baseUrl: String, contestId: Long): List<EjudgeRun> {
     val lines = csvText.trimStart('﻿').lines().filter { it.isNotBlank() }
     if (lines.size < 2) return emptyList()
@@ -29,6 +32,7 @@ private fun buildRun(row: Map<String, String>, baseUrl: String, contestId: Long)
         problem = row["Problem"]?.trim() ?: "",
         language = row["Language"]?.trim() ?: "",
         status = EjudgeRunStatus.fromCode(row["Stat_Short"] ?: ""),
+        score = row["Score"]?.trim()?.toIntOrNull()?.takeIf { it != NO_SCORE },
         code = null,
     )
 }

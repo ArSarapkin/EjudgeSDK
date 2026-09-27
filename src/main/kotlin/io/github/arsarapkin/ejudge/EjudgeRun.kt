@@ -13,6 +13,8 @@ data class EjudgeRun(
     val problem: String,
     val language: String,
     val status: EjudgeRunStatus,
+    /** Балл посылки; `null` в контестах без баллов. */
+    val score: Int?,
     /** Исходный код; `null`, если посылки загружены без кода. */
     val code: String?,
 ) {

@@ -16,6 +16,7 @@ class EjudgeRunTest {
         problem = problem,
         language = "",
         status = EjudgeRunStatus.OK,
+        score = null,
         code = null,
     )
 
