@@ -1,4 +1,4 @@
-# EjudgeLib
+# EjudgeSDK
 
 Kotlin SDK для работы с [ejudge](https://ejudge.ru) от имени судьи: получение посылок контеста вместе с исходным кодом, принятие посылок и вызов на защиту.
 
@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.arsarapkin:EjudgeLib:0.1.0")
+    implementation("io.github.arsarapkin:EjudgeSDK:0.1.0")
 }
 ```
 
