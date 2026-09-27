@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.arsarapkin:ejudge-sdk:0.1.0")
+    implementation("io.github.arsarapkin:ejudge-sdk:0.2.0")
 }
 ```
 
