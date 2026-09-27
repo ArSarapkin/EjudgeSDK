@@ -28,7 +28,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             // GitHub Packages принимает только имена пакетов в нижнем регистре
-            artifactId = "ejudgesdk"
+            artifactId = "ejudge-sdk"
             from(components["java"])
         }
     }
