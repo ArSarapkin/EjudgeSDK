@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.arsarapkin:ejudge-sdk:0.2.0")
+    implementation("io.github.arsarapkin:ejudge-sdk:0.3.0")
 }
 ```
 
@@ -73,8 +73,8 @@ EjudgeClient(baseUrl: String, username: String, password: String)
 | Метод | Что делает |
 |---|---|
 | `getRuns(loadCodes: Boolean = true, firstRunId: Int = 0): List<EjudgeRun>` | Возвращает посылки с `runId >= firstRunId`. При `loadCodes = false` исходный код не скачивается |
-| `accept(run: EjudgeRun): EjudgeRun` | Ставит посылке статус `OK` |
-| `summon(run: EjudgeRun, message: String): EjudgeRun` | Оставляет комментарий к посылке и вызывает её на защиту (статус `SM`) |
+| `accept(run: EjudgeRun): EjudgeRun` | Ставит посылке статус `EjudgeRunStatus.OK` |
+| `summon(run: EjudgeRun, message: String): EjudgeRun` | Оставляет комментарий к посылке и вызывает её на защиту (статус `EjudgeRunStatus.SUMMONED`) |
 
 `accept` и `summon` возвращают копию посылки с новым статусом, исходный объект не меняется.
 
@@ -92,10 +92,25 @@ data class EjudgeRun(
     val author: String,     // имя участника
     val problem: String,    // короткое имя задачи
     val language: String,
-    val status: String,     // короткий статус: OK, WA, SM, ...
+    val status: EjudgeRunStatus,
     val code: String?,      // исходный код; null, если getRuns(loadCodes = false)
 )
 ```
+
+`problemPos(): Int?` возвращает позицию задачи по букве в `problem`, начиная с 0: `A` → 0, `B` → 1 и т.д. Регистр не важен. Если `problem` — не одна латинская буква, возвращается `null`.
+
+### `EjudgeRunStatus`
+
+Статус посылки. У каждого значения есть `code` — короткое обозначение из ejudge: `OK`, `WA`, `SM` и т.д.
+
+```kotlin
+if (run.status == EjudgeRunStatus.WRONG_ANSWER) { ... }
+
+EjudgeRunStatus.fromCode("TL") // TIME_LIMIT_EXCEEDED
+EjudgeRunStatus.SUMMONED.code  // "SM"
+```
+
+Если ejudge вернул статус, которого нет в enum, он становится `EjudgeRunStatus.UNKNOWN`.
 
 ## Ошибки
 

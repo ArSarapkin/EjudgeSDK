@@ -43,7 +43,7 @@ class EjudgeConnection internal constructor(
         return rows.map { it.copy(code = codeByRunId[it.runId] ?: "") }
     }
 
-    /** Ставит посылке статус OK. */
+    /** Ставит посылке статус [EjudgeRunStatus.OK]. */
     fun accept(run: EjudgeRun): EjudgeRun {
         val query = buildQuery(
             "SID" to sid,
@@ -51,10 +51,10 @@ class EjudgeConnection internal constructor(
             "action_241" to "Just OK the run",
         )
         sendWithRetry(noRedirectClient, buildRequest("$judgeUrl?$query"))
-        return run.copy(status = "OK")
+        return run.copy(status = EjudgeRunStatus.OK)
     }
 
-    /** Оставляет комментарий [message] к посылке и вызывает её на защиту (статус SM). */
+    /** Оставляет комментарий [message] к посылке и вызывает её на защиту (статус [EjudgeRunStatus.SUMMONED]). */
     fun summon(run: EjudgeRun, message: String): EjudgeRun {
         val query = buildQuery(
             "SID" to sid,
@@ -63,7 +63,7 @@ class EjudgeConnection internal constructor(
             "action_239" to "Send run comment and SUMMON run",
         )
         sendWithRetry(noRedirectClient, buildRequest("$judgeUrl?$query"))
-        return run.copy(status = "SM")
+        return run.copy(status = EjudgeRunStatus.SUMMONED)
     }
 
     private fun fetchRunRows(): List<EjudgeRun> {

@@ -28,7 +28,7 @@ private fun buildRun(row: Map<String, String>, baseUrl: String, contestId: Long)
         author = row["Name"]?.trim() ?: "",
         problem = row["Problem"]?.trim() ?: "",
         language = row["Language"]?.trim() ?: "",
-        status = row["Stat_Short"]?.trim() ?: "",
+        status = EjudgeRunStatus.fromCode(row["Stat_Short"] ?: ""),
         code = null,
     )
 }

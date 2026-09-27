@@ -24,12 +24,23 @@ class RunsCsvTest {
                     author = "Ivan Ivanov",
                     problem = "A",
                     language = "g++",
-                    status = "OK",
+                    status = EjudgeRunStatus.OK,
                     code = null,
                 ),
             ),
             runs,
         )
+    }
+
+    @Test
+    fun `maps unrecognized status to UNKNOWN`() {
+        val csv = "RunId;Year;Mon;Day;Hour;Min;Sec;Stat_Short\n" +
+            "1;2026;9;27;17;5;3;SM\n" +
+            "2;2026;9;27;17;5;3;XX\n"
+
+        val statuses = parseRunsCsv(csv, "u", 1).map { it.status }
+
+        assertEquals(listOf(EjudgeRunStatus.SUMMONED, EjudgeRunStatus.UNKNOWN), statuses)
     }
 
     @Test
